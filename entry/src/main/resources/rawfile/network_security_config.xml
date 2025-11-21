@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- 测试环境可允许所有HTTP请求，生产环境禁用 -->
+    <base-config cleartextTrafficPermitted="true"/>
+    <!-- 也可仅允许指定域名的HTTP请求，更安全 -->
+    <!--<domain-config cleartextTrafficPermitted="true">
+      <domain includeSubdomains="true">test.example.com</domain>
+    </domain-config>-->
+</network-security-config>

@@ -1,0 +1,56 @@
+{
+  "app": {
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "C:\\Users\\34857\\.ohos\\config\\default_GreenGroth_2zkMoGRQ23T0hwfrix4UQ-P3d7ce_fX4DJwYQf7UnIw=.cer",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001AFF1CE58DA522801C1F22AA0739CF7A5386EF0F2D611E3A5B474C3C0C7957C8766525827293A9",
+          "profile": "C:\\Users\\34857\\.ohos\\config\\default_GreenGroth_2zkMoGRQ23T0hwfrix4UQ-P3d7ce_fX4DJwYQf7UnIw=.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "C:\\Users\\34857\\.ohos\\config\\default_GreenGroth_2zkMoGRQ23T0hwfrix4UQ-P3d7ce_fX4DJwYQf7UnIw=.p12",
+          "storePassword": "0000001A8F62E201B74DBC781DA9AD7E1BF0F5797275290F18175DB8AC103670381CA8E965673B5A60C5"
+        }
+      }
+    ],
+    "products": [
+      {
+        "name": "default",
+        "signingConfig": "default",
+        "targetSdkVersion": "5.0.5(17)",
+        "compatibleSdkVersion": "5.0.0(12)",
+        "runtimeOS": "HarmonyOS",
+        "buildOption": {
+          "strictMode": {
+            "caseSensitiveCheck": true,
+            "useNormalizedOHMUrl": true
+          }
+        }
+      }
+    ],
+    "buildModeSet": [
+      {
+        "name": "debug",
+      },
+      {
+        "name": "release"
+      }
+    ]
+  },
+  "modules": [
+    {
+      "name": "entry",
+      "srcPath": "./entry",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    }
+  ]
+}

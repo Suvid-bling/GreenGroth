@@ -1,0 +1,199 @@
+{
+  "ohos-module-entry": {
+    "SELECT_TARGET": "default",
+    "MODULE_BUILD_DIR": "C:\\Users\\34857\\DevEcoStudioProjects\\GreenGroth\\entry\\build",
+    "TARGETS": {
+      "default": {
+        "SOURCE_ROOT": "C:\\Users\\34857\\DevEcoStudioProjects\\GreenGroth\\entry\\src\\main",
+        "RESOURCES_PATH": [
+          "C:\\Users\\34857\\DevEcoStudioProjects\\GreenGroth\\entry\\src\\main\\resources"
+        ],
+        "BUILD_PATH": {
+          "OUTPUT_PATH": "C:\\Users\\34857\\DevEcoStudioProjects\\GreenGroth\\entry\\build\\default\\outputs\\default",
+          "INTERMEDIA_PATH": "C:\\Users\\34857\\DevEcoStudioProjects\\GreenGroth\\entry\\build\\default\\intermediates",
+          "JS_ASSETS_PATH": "C:\\Users\\34857\\DevEcoStudioProjects\\GreenGroth\\entry\\build\\default\\intermediates\\loader_out\\default",
+          "JS_LITE_ASSETS_PATH": "C:\\Users\\34857\\DevEcoStudioProjects\\GreenGroth\\entry\\build\\default\\intermediates\\loader_out_lite\\default",
+          "RES_PATH": "C:\\Users\\34857\\DevEcoStudioProjects\\GreenGroth\\entry\\build\\default\\intermediates\\res\\default",
+          "RES_PROFILE_PATH": "C:\\Users\\34857\\DevEcoStudioProjects\\GreenGroth\\entry\\build\\default\\intermediates\\res\\default\\resources\\base\\profile",
+          "ETS_SUPER_VISUAL_PATH": "C:\\Users\\34857\\DevEcoStudioProjects\\GreenGroth\\entry\\build\\default\\cache\\default\\default@CompileArkTS\\esmodule",
+          "JS_SUPER_VISUAL_PATH": "C:\\Users\\34857\\DevEcoStudioProjects\\GreenGroth\\entry\\build\\default\\cache\\default\\default@CompileJS\\jsbundle",
+          "WORKER_LOADER": "C:\\Users\\34857\\DevEcoStudioProjects\\GreenGroth\\entry\\build\\default\\intermediates\\loader\\default\\loader.json",
+          "MANIFEST_JSON": "C:\\Users\\34857\\DevEcoStudioProjects\\GreenGroth\\entry\\build\\default\\intermediates\\manifest\\default",
+          "OUTPUT_METADATA_JSON": "C:\\Users\\34857\\DevEcoStudioProjects\\GreenGroth\\entry\\build\\default\\intermediates\\hap_metadata\\default\\output_metadata.json",
+          "SOURCE_MAP_DIR": "C:\\Users\\34857\\DevEcoStudioProjects\\GreenGroth\\entry\\build\\default\\intermediates\\source_map\\default"
+        },
+        "BUILD_OPTION": {
+          "debuggable": true
+        }
+      },
+      "ohosTest": {
+        "SOURCE_ROOT": "C:\\Users\\34857\\DevEcoStudioProjects\\GreenGroth\\entry\\src\\ohosTest",
+        "RESOURCES_PATH": [
+          "C:\\Users\\34857\\DevEcoStudioProjects\\GreenGroth\\entry\\src\\ohosTest\\resources"
+        ],
+        "BUILD_PATH": {
+          "OUTPUT_PATH": "C:\\Users\\34857\\DevEcoStudioProjects\\GreenGroth\\entry\\build\\default\\outputs\\ohosTest",
+          "INTERMEDIA_PATH": "C:\\Users\\34857\\DevEcoStudioProjects\\GreenGroth\\entry\\build\\default\\intermediates",
+          "JS_ASSETS_PATH": "C:\\Users\\34857\\DevEcoStudioProjects\\GreenGroth\\entry\\build\\default\\intermediates\\loader_out\\ohosTest",
+          "JS_LITE_ASSETS_PATH": "C:\\Users\\34857\\DevEcoStudioProjects\\GreenGroth\\entry\\build\\default\\intermediates\\loader_out_lite\\ohosTest",
+          "RES_PATH": "C:\\Users\\34857\\DevEcoStudioProjects\\GreenGroth\\entry\\build\\default\\intermediates\\res\\ohosTest",
+          "RES_PROFILE_PATH": "C:\\Users\\34857\\DevEcoStudioProjects\\GreenGroth\\entry\\build\\default\\intermediates\\res\\ohosTest\\resources\\base\\profile",
+          "ETS_SUPER_VISUAL_PATH": "C:\\Users\\34857\\DevEcoStudioProjects\\GreenGroth\\entry\\build\\default\\cache\\ohosTest\\ohosTest@OhosTestCompileArkTS\\esmodule",
+          "JS_SUPER_VISUAL_PATH": "C:\\Users\\34857\\DevEcoStudioProjects\\GreenGroth\\entry\\build\\default\\cache\\ohosTest\\ohosTest@OhosTestCompileJS\\jsbundle",
+          "WORKER_LOADER": "C:\\Users\\34857\\DevEcoStudioProjects\\GreenGroth\\entry\\build\\default\\intermediates\\loader\\ohosTest\\loader.json",
+          "MANIFEST_JSON": "C:\\Users\\34857\\DevEcoStudioProjects\\GreenGroth\\entry\\build\\default\\intermediates\\manifest\\ohosTest",
+          "OUTPUT_METADATA_JSON": "C:\\Users\\34857\\DevEcoStudioProjects\\GreenGroth\\entry\\build\\default\\intermediates\\hap_metadata\\ohosTest\\output_metadata.json",
+          "SOURCE_MAP_DIR": "C:\\Users\\34857\\DevEcoStudioProjects\\GreenGroth\\entry\\build\\default\\intermediates\\source_map\\ohosTest"
+        },
+        "BUILD_OPTION": {
+          "debuggable": true
+        }
+      }
+    },
+    "BUILD_OPTION": {
+      "default-default": {
+        "debuggable": true,
+        "copyFrom": "default",
+        "strictMode": {
+          "caseSensitiveCheck": true,
+          "useNormalizedOHMUrl": true
+        },
+        "resOptions": {
+          "copyCodeResource": {
+            "enable": false
+          }
+        },
+        "name": "debug"
+      }
+    },
+    "BUILD_PROFILE_OPT": {
+      "apiType": "stageMode",
+      "buildOption": {
+        "resOptions": {
+          "copyCodeResource": {
+            "enable": false
+          }
+        }
+      },
+      "buildOptionSet": [
+        {
+          "name": "release",
+          "arkOptions": {
+            "obfuscation": {
+              "ruleOptions": {
+                "enable": false,
+                "files": [
+                  "./obfuscation-rules.txt"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "name": "default"
+        },
+        {
+          "name": "debug"
+        }
+      ],
+      "targets": [
+        {
+          "name": "default"
+        },
+        {
+          "name": "ohosTest"
+        }
+      ]
+    },
+    "BUILD_CACHE_DIR": ""
+  },
+  "ohos-project": {
+    "SELECT_PRODUCT_NAME": "default",
+    "MODULE_BUILD_DIR": "C:\\Users\\34857\\DevEcoStudioProjects\\GreenGroth\\build",
+    "BUNDLE_NAME": "com.example.greengroth",
+    "BUILD_PATH": {
+      "OUTPUT_PATH": "C:\\Users\\34857\\DevEcoStudioProjects\\GreenGroth\\build\\outputs\\default"
+    },
+    "MODULES": [
+      {
+        "name": "entry",
+        "srcPath": "C:\\Users\\34857\\DevEcoStudioProjects\\GreenGroth\\entry",
+        "targets": [
+          {
+            "name": "default",
+            "applyToProducts": [
+              "default"
+            ]
+          }
+        ],
+        "belongProjectPath": "C:\\Users\\34857\\DevEcoStudioProjects\\GreenGroth"
+      }
+    ],
+    "PROFILE_OPT": {
+      "app": {
+        "signingConfigs": [
+          {
+            "name": "default",
+            "type": "HarmonyOS",
+            "material": {
+              "certpath": "C:\\Users\\34857\\.ohos\\config\\default_GreenGroth_2zkMoGRQ23T0hwfrix4UQ-P3d7ce_fX4DJwYQf7UnIw=.cer",
+              "keyAlias": "debugKey",
+              "keyPassword": "0000001AFF1CE58DA522801C1F22AA0739CF7A5386EF0F2D611E3A5B474C3C0C7957C8766525827293A9",
+              "profile": "C:\\Users\\34857\\.ohos\\config\\default_GreenGroth_2zkMoGRQ23T0hwfrix4UQ-P3d7ce_fX4DJwYQf7UnIw=.p7b",
+              "signAlg": "SHA256withECDSA",
+              "storeFile": "C:\\Users\\34857\\.ohos\\config\\default_GreenGroth_2zkMoGRQ23T0hwfrix4UQ-P3d7ce_fX4DJwYQf7UnIw=.p12",
+              "storePassword": "0000001A8F62E201B74DBC781DA9AD7E1BF0F5797275290F18175DB8AC103670381CA8E965673B5A60C5"
+            }
+          }
+        ],
+        "products": [
+          {
+            "name": "default",
+            "signingConfig": "default",
+            "targetSdkVersion": "5.0.5(17)",
+            "compatibleSdkVersion": "5.0.0(12)",
+            "runtimeOS": "HarmonyOS",
+            "buildOption": {
+              "strictMode": {
+                "caseSensitiveCheck": true,
+                "useNormalizedOHMUrl": true
+              }
+            }
+          }
+        ],
+        "buildModeSet": [
+          {
+            "name": "debug"
+          },
+          {
+            "name": "release"
+          }
+        ]
+      },
+      "modules": [
+        {
+          "name": "entry",
+          "srcPath": "./entry",
+          "targets": [
+            {
+              "name": "default",
+              "applyToProducts": [
+                "default"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "CONFIG_PROPERTIES": {
+      "enableSignTask": true,
+      "skipNativeIncremental": false,
+      "hvigor.keepDependency": true
+    },
+    "OVERALL_PROJECT_PATHS": [
+      "C:\\Users\\34857\\DevEcoStudioProjects\\GreenGroth"
+    ],
+    "BUILD_CACHE_DIR": ""
+  },
+  "version": 1
+}
