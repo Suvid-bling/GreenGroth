@@ -12,7 +12,7 @@
       },
       {
         "name": "ohos.permission.GET_NETWORK_INFO"
-      }
+      },
     ],
     "deviceTypes": [
       "phone",

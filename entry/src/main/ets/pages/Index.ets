@@ -1,14 +1,18 @@
 import { picker } from '@kit.CoreFileKit';
 import { ImageUtils } from '../utils/ImageUtils'
 import {PlantApiService} from '../services/PlantApiService'
-import { camera } from '@kit.CameraKit';
 import { router } from '@kit.ArkUI';
 import { BusinessError } from '@kit.BasicServicesKit';
+import { PlantSave } from '../utils/PlantSave';
+import { common } from '@kit.AbilityKit';
+import { camera, cameraPicker } from '@kit.CameraKit';
+
 
 @Entry
 @Component
 struct Index {
   @State selectedImage: string = ''
+  private context: common.UIAbilityContext = getContext(this) as common.UIAbilityContext
   private xComponentController: XComponentController = new XComponentController()
   private surfaceId: string = ''
 
@@ -72,6 +76,11 @@ struct Index {
           .enabled(this.selectedImage !== '')
           .backgroundColor(this.selectedImage ? '#1677FF' : '#CCC')
           .onClick(() => this.recognizePlant())
+
+        Button('图鉴')
+          .onClick(() => {
+            router.pushUrl({ url: 'pages/HandbookPage' })
+          })
       }
       .margin({ top: 40 })
     }
@@ -99,18 +108,19 @@ struct Index {
 
   async takePhoto() {
     try {
-      const photoSelectOptions = new picker.PhotoSelectOptions()
-      photoSelectOptions.MIMEType = picker.PhotoViewMIMETypes.IMAGE_TYPE
-      photoSelectOptions.maxSelectNumber = 1
+      const pickerResult: cameraPicker.PickerResult =
+        await cameraPicker.pick(
+          this.context,
+          [cameraPicker.PickerMediaType.PHOTO],
+          { cameraPosition: 1 }  // 1 = back camera, 2 = front camera
+        );
 
-      const photoViewPicker = new picker.PhotoViewPicker()
-      const result = await photoViewPicker.select(photoSelectOptions)
-
-      if (result && result.photoUris.length > 0) {
-        this.selectedImage = result.photoUris[0]
+      if (pickerResult && pickerResult.resultUri) {
+        this.selectedImage = pickerResult.resultUri;
+        console.info('📷 Photo captured:', this.selectedImage);
       }
     } catch (err) {
-      console.error('拍照失败:', JSON.stringify(err))
+      console.error('拍照失败:', JSON.stringify(err));
     }
   }
 
@@ -121,12 +131,22 @@ struct Index {
       const base64Image = await ImageUtils.processImageToBase64(this.selectedImage)
       const result = await PlantApiService.recognizePlant(base64Image)
 
+      // Process: check → save image → save to storage
+      await PlantSave.processPlant(
+        result,
+        this.selectedImage,
+        this.context
+      )
+      console.info('✅ Plant processed')
+
       await router.pushUrl({
         url: 'pages/ResultPage',
         params: {
           plantResults: JSON.stringify([result])
         }
       })
+
+
     } catch (err) {
       console.error('识别失败:', err)
       await router.pushUrl({

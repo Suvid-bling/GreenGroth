@@ -7,8 +7,7 @@
       }
     ],
     "NATIVE_COMPILER": "Default",
-    "BUILD_MODE": "debug",
-    "USE_NORMALIZED_OHMURL": true
+    "BUILD_MODE": "debug"
   },
   "HVIGOR": {
     "IS_INCREMENTAL": true,
@@ -17,19 +16,19 @@
     "IS_HVIGORFILE_TYPE_CHECK": false,
     "TASK_TIME": {
       "1043bfc77febe75fafec0c4309faccf1": {
-        "CreateModuleInfo": 1025900,
-        "ConfigureCmake": 512000,
-        "PreCheckSyscap": 490000,
-        "ProcessIntegratedHsp": 711300,
-        "BuildNativeWithCmake": 377700,
-        "SyscapTransform": 3969100,
-        "ProcessStartupConfig": 3143500,
-        "BuildNativeWithNinja": 740500,
-        "BuildJS": 5075700,
-        "ProcessCompiledResources": 1044400,
-        "PackingCheck": 5394600,
-        "CollectDebugSymbol": 1900600,
-        "assembleHap": 263600
+        "CreateModuleInfo": 2146100,
+        "ConfigureCmake": 649400,
+        "PreCheckSyscap": 1115700,
+        "ProcessIntegratedHsp": 1810400,
+        "BuildNativeWithCmake": 1215300,
+        "SyscapTransform": 23470800,
+        "ProcessStartupConfig": 5973400,
+        "BuildNativeWithNinja": 1443000,
+        "BuildJS": 6226400,
+        "ProcessCompiledResources": 1800700,
+        "PackingCheck": 14260400,
+        "CollectDebugSymbol": 3138200,
+        "assembleHap": 465100
       }
     },
     "APIS": [
@@ -40,6 +39,8 @@
       "getAllNodes",
       "getRootNode",
       "getNodeName",
+      "getStartParams",
+      "buildFinished",
       "getNodePath",
       "subNodes",
       "getExtraOption",
@@ -53,7 +54,7 @@
       "getCommandEntryTask"
     ],
     "CONFIG_PROPERTIES": {},
-    "TOTAL_TIME": 525116100,
-    "BUILD_ID": "202511200103553300"
+    "BUILD_ID": "202511221233390080",
+    "TOTAL_TIME": 5690756500
   }
 }

@@ -10,6 +10,7 @@ export interface PlantInfo {
   ImageUrl: string
   hyyy: string
   InfoCode: string
+  LocalUrl?: string
 }
 
 export interface ApiResponse {

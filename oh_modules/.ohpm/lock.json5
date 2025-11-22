@@ -38,6 +38,15 @@
     }
   },
   "packages": {
+    "@ohos/axios@2.2.6": {
+      "integrity": "sha512-A1JqGe6XaeqWyjQETitFW4EkubQS7Fv7h0YG5a/ry3/a/vOgVGzwC4y5KAhvMzVv1tYjfY0ntMtV2kJGlmOHcQ==",
+      "storePath": "oh_modules/.ohpm/@ohos+axios@2.2.6",
+      "dependencies": {},
+      "dynamicDependencies": {},
+      "dev": false,
+      "dynamic": false,
+      "maskedByOverrideDependencyMap": false
+    },
     "@ohos/hypium@1.0.24": {
       "integrity": "sha512-3dCqc+BAR5LqEGG2Vtzi8O3r7ci/3fYU+FWjwvUobbfko7DUnXGOccaror0yYuUhJfXzFK0aZNMGSnXaTwEnbw==",
       "storePath": "oh_modules/.ohpm/@ohos+hypium@1.0.24",
@@ -53,15 +62,6 @@
       "dependencies": {},
       "dynamicDependencies": {},
       "dev": true,
-      "dynamic": false,
-      "maskedByOverrideDependencyMap": false
-    },
-    "@ohos/axios@2.2.6": {
-      "integrity": "sha512-A1JqGe6XaeqWyjQETitFW4EkubQS7Fv7h0YG5a/ry3/a/vOgVGzwC4y5KAhvMzVv1tYjfY0ntMtV2kJGlmOHcQ==",
-      "storePath": "oh_modules/.ohpm/@ohos+axios@2.2.6",
-      "dependencies": {},
-      "dynamicDependencies": {},
-      "dev": false,
       "dynamic": false,
       "maskedByOverrideDependencyMap": false
     }

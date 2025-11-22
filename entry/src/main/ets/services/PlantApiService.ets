@@ -62,7 +62,7 @@ export class PlantApiService {
     const topResult = response.Result[0];
     const score = parseFloat(topResult.Score);
 
-    if (score < 50) {
+    if (score < 40) {
       return null;
     }
 
