@@ -4,6 +4,7 @@ import { window } from '@kit.ArkUI';
 import { PlantStorage } from '../database/PlantDatabase';
 import {PlantStorageTest} from '../../../../src/test/PlantStorageTest'
 import {StorageDebug} from '../../../../src/test/StorageDebug'
+import { PlantWikiStorage } from '../database/PlantWikiStorage';
 
 const DOMAIN = 0x0000;
 
@@ -15,6 +16,7 @@ export default class EntryAbility extends UIAbility {
       this.context.getApplicationContext().setColorMode(ConfigurationConstant.ColorMode.COLOR_MODE_NOT_SET);
       StorageDebug.printAllPlants(this.context);
       PlantStorage.init(this.context);
+      PlantWikiStorage.init(this.context)
       //PlantStorageTest.runTests(this.context);
     } catch (err) {
       hilog.error(DOMAIN, 'testTag', 'Failed to set colorMode. Cause: %{public}s', JSON.stringify(err));

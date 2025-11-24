@@ -1,5 +1,6 @@
 import { router } from '@kit.ArkUI';
 import { PlantInfo } from '../models/PlantInfo';
+import { WebImg } from '../utils/WebImg';
 
 @Entry
 @Component
@@ -9,8 +10,6 @@ struct ResultPage {
   aboutToAppear() {
     const params = router.getParams() as Record<string, string>
     this.plantData = JSON.parse(params.plantResults) as PlantInfo[]
-
-
   }
 
   build() {
@@ -19,6 +18,13 @@ struct ResultPage {
       Row() {
         Button('返回')
           .onClick(() => router.back())
+        Button('查看百科')
+          .onClick(() => {
+            router.pushUrl({
+              url: 'pages/WikiPage',
+              params: { infoCode: this.plantData[0].InfoCode }
+            })
+          })
         Text('识别结果')
           .fontSize(20)
           .fontWeight(FontWeight.Bold)
@@ -28,20 +34,11 @@ struct ResultPage {
       .justifyContent(FlexAlign.SpaceBetween)
 
       // Use API ImageUrl instead of local imageUri
-      if (this.plantData.length > 0) {
-        Image(this.plantData[0].ImageUrl)
-          .alt($r('app.media.startIcon')) // Fallback image
-          .onError(() => {
-            console.error('Image load failed:', this.plantData[0].ImageUrl)
-          })
-          .onComplete(() => {
-            console.info('Image loaded successfully')
-          })
-          .width('90%')
-          .height(200)
-          .borderRadius(12)
-          .objectFit(ImageFit.Cover)
-      }
+      WebImg({
+        imageUrl: this.plantData[0].ImageUrl,
+        imgWidth: '100%',
+        imgHeight: 250
+      })
 
       // Results List
       List({ space: 12 }) {
@@ -64,7 +61,7 @@ struct ResultPage {
   PlantCard(plant: PlantInfo) {
     Column({ space: 8 }) {
       Row({ space: 12 }) {
-        Image(plant.ImageUrl)
+        Image(plant.LocalUrl)
           .width(80)
           .height(80)
           .borderRadius(8)

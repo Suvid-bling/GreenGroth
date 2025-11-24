@@ -3,6 +3,8 @@
     "pages/Index",
     "pages/ResultPage",
     "pages/FailedResultPage",
-    "pages/HandbookPage"
+    "pages/HandbookPage",
+    "pages/WikiPage",
+    "pages/RecognizePage"
   ]
 }

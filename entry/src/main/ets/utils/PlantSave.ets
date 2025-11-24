@@ -2,6 +2,7 @@ import { PlantStorage } from '../database/PlantDatabase';
 import { ImgSave } from './ImgSave';
 import { PlantInfo } from '../models/PlantInfo';
 import { common } from '@kit.AbilityKit';
+import { WikiApiService } from '../services/WikiApiService'
 
 export class PlantSave {
   /**
@@ -45,11 +46,15 @@ export class PlantSave {
     sourceImageUri: string,
     context: common.UIAbilityContext
   ): Promise<PlantInfo> {
+    await PlantStorage.init(context);  // Add this line
+
     const exists = await PlantSave.checkExists(plant.InfoCode);
 
     if (!exists) {
       await PlantSave.saveImageAndAddUrl(plant, sourceImageUri, context);
       await PlantSave.saveToStorage(plant);
+      // Fetch and save wiki info
+      await WikiApiService.fetchAndSaveWiki(plant.InfoCode);
     } else {
       console.info(`ℹ️ Plant already exists: ${plant.InfoCode}`);
     }

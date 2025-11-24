@@ -7,27 +7,17 @@ import { common } from '@kit.AbilityKit';
 @Component
 struct HandbookPage {
   @State plants: PlantInfo[] = []
-  @State currentPage: number = 0
-  @State itemsPerPage: number = 12
-  private totalPages: number = 0
-  private scroller: Scroller = new Scroller()  // ✅ Add back
+  private scroller: Scroller = new Scroller()
 
   async aboutToAppear() {
     try {
       const context = getContext(this) as common.UIAbilityContext;
       await PlantStorage.init(context);
       this.plants = await PlantStorage.getAllPlants();
-      this.totalPages = Math.ceil(this.plants.length / this.itemsPerPage);
-      console.info(`📚 Loaded ${this.plants.length} plants, ${this.totalPages} pages`);
+      console.info(`📚 Loaded ${this.plants.length} plants`);
     } catch (err) {
       console.error('Failed to load plants:', JSON.stringify(err));
     }
-  }
-
-  getCurrentPagePlants(): PlantInfo[] {
-    const start = this.currentPage * this.itemsPerPage;
-    const end = start + this.itemsPerPage;
-    return this.plants.slice(start, end);
   }
 
   build() {
@@ -45,6 +35,7 @@ struct HandbookPage {
       .justifyContent(FlexAlign.SpaceBetween)
 
       if (this.plants.length === 0) {
+        // Empty state
         Column() {
           Image($r('app.media.startIcon'))
             .width(80)
@@ -59,47 +50,22 @@ struct HandbookPage {
         .layoutWeight(1)
         .justifyContent(FlexAlign.Center)
       } else {
-        // Grid with scroller
-        Grid(this.scroller) {  // ✅ Pass scroller
-          ForEach(this.getCurrentPagePlants(), (plant: PlantInfo) => {
+        // Grid: 3 columns with lazy loading
+        Grid(this.scroller) {
+          ForEach(this.plants, (plant: PlantInfo) => {
             GridItem() {
               this.PlantCard(plant)
             }
-          }, (plant: PlantInfo) => plant.InfoCode)  // ✅ Add key generator
+          }, (plant: PlantInfo) => plant.InfoCode)
         }
         .columnsTemplate('1fr 1fr 1fr')
-        .rowsTemplate('1fr 1fr 1fr 1fr')
-        .rowsGap(12)
-        .columnsGap(12)
-        .padding({ left: 12, right: 12, top: 16 })
+        .rowsGap(16)
+        .columnsGap(16)
+        .padding(16)
         .width('100%')
         .layoutWeight(1)
-
-        // Pagination
-        Row({ space: 8 }) {
-          Button('上一页')
-            .fontSize(14)
-            .enabled(this.currentPage > 0)
-            .backgroundColor(this.currentPage > 0 ? '#1677FF' : '#CCC')
-            .onClick(() => {
-              if (this.currentPage > 0) this.currentPage--
-            })
-
-          Text(`${this.currentPage + 1} / ${this.totalPages}`)
-            .fontSize(14)
-            .padding({ left: 16, right: 16 })
-
-          Button('下一页')
-            .fontSize(14)
-            .enabled(this.currentPage < this.totalPages - 1)
-            .backgroundColor(this.currentPage < this.totalPages - 1 ? '#1677FF' : '#CCC')
-            .onClick(() => {
-              if (this.currentPage < this.totalPages - 1) this.currentPage++
-            })
-        }
-        .width('100%')
-        .padding(16)
-        .justifyContent(FlexAlign.Center)
+        .cachedCount(3)  // Only cache 1 row (3 items) ahead/behind
+        .enableScrollInteraction(true)
       }
     }
     .width('100%')
@@ -109,21 +75,26 @@ struct HandbookPage {
 
   @Builder
   PlantCard(plant: PlantInfo) {
-    Column({ space: 6 }) {
+    Column({ space: 8 }) {
+      // Square image with memory optimization
       Image(plant.LocalUrl || plant.ImageUrl)
         .alt($r('app.media.startIcon'))
-        .width('80%')
+        .width('100%')
         .aspectRatio(1)
         .borderRadius(8)
         .objectFit(ImageFit.Cover)
         .backgroundColor('#E0E0E0')
-        .syncLoad(false)
-        .interpolation(ImageInterpolation.Low)  // ✅ Lower quality
-        .sourceSize({ width: 300, height: 300 })  // ✅ Critical: decode at smaller size
+        .interpolation(ImageInterpolation.Low)  // Lower quality = less memory
         .renderMode(ImageRenderMode.Original)
+        .syncLoad(false)  // Critical: async loading
+        .sourceSize({ width: 200, height: 200 })  // Decode at smaller size
+        .onError(() => {
+          console.error(`Failed to load: ${plant.Name}`);
+        })
 
+      // Name
       Text(plant.Name)
-        .fontSize(13)
+        .fontSize(14)
         .maxLines(1)
         .textOverflow({ overflow: TextOverflow.Ellipsis })
         .textAlign(TextAlign.Center)
@@ -132,8 +103,8 @@ struct HandbookPage {
     .width('100%')
     .onClick(() => {
       router.pushUrl({
-        url: 'pages/WikiPage',
-        params: { infoCode: plant.InfoCode }
+        url: 'pages/ResultPage',
+        params: { plantResults: JSON.stringify([plant]) }
       }).catch((err: Error) => {
         console.error('Navigation error:', err.message);
       });
