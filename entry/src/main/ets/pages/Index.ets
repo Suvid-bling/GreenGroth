@@ -2,6 +2,7 @@ import { router } from '@kit.ArkUI';
 import { picker } from '@kit.CoreFileKit';
 import { cameraPicker } from '@kit.CameraKit';
 import { common } from '@kit.AbilityKit';
+import { IndexLayout } from '../../layout/pages/IndexLayout';
 
 @Entry
 @Component
@@ -9,60 +10,15 @@ struct Index {
   private context: common.UIAbilityContext = getContext(this) as common.UIAbilityContext
 
   build() {
-    Column({ space: 30 }) {
-      // Logo/Title
-      Column({ space: 12 }) {
-        Image($r('app.media.startIcon'))
-          .width(120)
-          .height(120)
-
-        Text('植物识别')
-          .fontSize(32)
-          .fontWeight(FontWeight.Bold)
-          .fontColor('#1677FF')
-      }
-      .margin({ top: 100 })
-
-      // Action Buttons
-      Column({ space: 16 }) {
-        Row({ space: 12 }) {
-          Button('拍照')
-            .width('40%')
-            .height(60)
-            .fontSize(18)
-            .backgroundColor('#1677FF')
-            .onClick(() => this.takePhoto())
-
-          Button('相册')
-            .width('40%')
-            .height(60)
-            .fontSize(18)
-            .backgroundColor('#52C41A')
-            .onClick(() => this.selectImage())
-        }
-        .width('85%')
-        .justifyContent(FlexAlign.SpaceEvenly)
-
-        Button('我的图鉴')
-          .width('85%')
-          .height(60)
-          .fontSize(18)
-          .backgroundColor('#FF9500')
-          .onClick(() => {
-            router.pushUrl({ url: 'pages/HandbookPage' })
-          })
-      }
-      .margin({ top: 60 })
-
-      Text('拍照识别植物，了解植物知识')
-        .fontSize(14)
-        .fontColor('#999')
-        .margin({ top: 40 })
+    Column() {
+      IndexLayout({
+        onCameraClick: (): Promise<void> => this.takePhoto(),
+        onGalleryClick: (): Promise<void> => this.selectImage(),
+        onHandbookClick: (): void => this.goToHandbook()
+      })
     }
     .width('100%')
     .height('100%')
-    .backgroundColor('#FFFFFF')
-    .justifyContent(FlexAlign.Center)
   }
 
   async selectImage() {
@@ -103,5 +59,9 @@ struct Index {
     } catch (err) {
       console.error('拍照失败:', JSON.stringify(err));
     }
+  }
+
+  goToHandbook() {
+    router.pushUrl({ url: 'pages/HandbookPage' })
   }
 }

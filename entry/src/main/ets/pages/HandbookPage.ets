@@ -2,6 +2,7 @@ import { router } from '@kit.ArkUI';
 import { PlantStorage } from '../database/PlantDatabase';
 import { PlantInfo } from '../models/PlantInfo';
 import { common } from '@kit.AbilityKit';
+import { HandbookPageLayout } from '../../layout/pages/HandBookPageLayout';
 
 @Entry
 @Component
@@ -9,134 +10,82 @@ struct HandbookPage {
   @State plants: PlantInfo[] = []
   @State currentPage: number = 0
   @State itemsPerPage: number = 12
-  private totalPages: number = 0
-  private scroller: Scroller = new Scroller()  // ✅ Add back
+  @State totalPages: number = 0
+  private scroller: Scroller = new Scroller()
 
   async aboutToAppear() {
-    try {
-      const context = getContext(this) as common.UIAbilityContext;
-      await PlantStorage.init(context);
-      this.plants = await PlantStorage.getAllPlants();
-      this.totalPages = Math.ceil(this.plants.length / this.itemsPerPage);
-      console.info(`📚 Loaded ${this.plants.length} plants, ${this.totalPages} pages`);
-    } catch (err) {
-      console.error('Failed to load plants:', JSON.stringify(err));
-    }
-  }
-
-  getCurrentPagePlants(): PlantInfo[] {
-    const start = this.currentPage * this.itemsPerPage;
-    const end = start + this.itemsPerPage;
-    return this.plants.slice(start, end);
+    await this.loadPlants()
   }
 
   build() {
     Column() {
-      // Header
-      Row() {
-        Button('返回')
-          .onClick(() => router.back())
-        Text('植物图鉴')
-          .fontSize(20)
-          .fontWeight(FontWeight.Bold)
-      }
-      .width('100%')
-      .padding(16)
-      .justifyContent(FlexAlign.SpaceBetween)
-
-      if (this.plants.length === 0) {
-        Column() {
-          Image($r('app.media.startIcon'))
-            .width(80)
-            .height(80)
-            .opacity(0.3)
-          Text('还没有收藏植物')
-            .fontSize(16)
-            .fontColor('#999')
-            .margin({ top: 20 })
-        }
-        .width('100%')
-        .layoutWeight(1)
-        .justifyContent(FlexAlign.Center)
-      } else {
-        // Grid with scroller
-        Grid(this.scroller) {  // ✅ Pass scroller
-          ForEach(this.getCurrentPagePlants(), (plant: PlantInfo) => {
-            GridItem() {
-              this.PlantCard(plant)
-            }
-          }, (plant: PlantInfo) => plant.InfoCode)  // ✅ Add key generator
-        }
-        .columnsTemplate('1fr 1fr 1fr')
-        .rowsTemplate('1fr 1fr 1fr 1fr')
-        .rowsGap(12)
-        .columnsGap(12)
-        .padding({ left: 12, right: 12, top: 16 })
-        .width('100%')
-        .layoutWeight(1)
-
-        // Pagination
-        Row({ space: 8 }) {
-          Button('上一页')
-            .fontSize(14)
-            .enabled(this.currentPage > 0)
-            .backgroundColor(this.currentPage > 0 ? '#1677FF' : '#CCC')
-            .onClick(() => {
-              if (this.currentPage > 0) this.currentPage--
-            })
-
-          Text(`${this.currentPage + 1} / ${this.totalPages}`)
-            .fontSize(14)
-            .padding({ left: 16, right: 16 })
-
-          Button('下一页')
-            .fontSize(14)
-            .enabled(this.currentPage < this.totalPages - 1)
-            .backgroundColor(this.currentPage < this.totalPages - 1 ? '#1677FF' : '#CCC')
-            .onClick(() => {
-              if (this.currentPage < this.totalPages - 1) this.currentPage++
-            })
-        }
-        .width('100%')
-        .padding(16)
-        .justifyContent(FlexAlign.Center)
-      }
+      HandbookPageLayout({
+        plants: $plants,
+        currentPage: $currentPage,
+        totalPages: this.totalPages,
+        itemsPerPage: this.itemsPerPage,
+        scroller: this.scroller,
+        onBackClick: (): void => this.handleBack(),
+        onPlantClick: (infoCode: string): void => this.handlePlantClick(infoCode),
+        onPrevPage: (): void => this.handlePrevPage(),
+        onNextPage: (): void => this.handleNextPage()
+      })
     }
     .width('100%')
     .height('100%')
-    .backgroundColor('#F5F5F5')
   }
 
-  @Builder
-  PlantCard(plant: PlantInfo) {
-    Column({ space: 6 }) {
-      Image(plant.LocalUrl || plant.ImageUrl)
-        .alt($r('app.media.startIcon'))
-        .width('80%')
-        .aspectRatio(1)
-        .borderRadius(8)
-        .objectFit(ImageFit.Cover)
-        .backgroundColor('#E0E0E0')
-        .syncLoad(false)
-        .interpolation(ImageInterpolation.Low)  // ✅ Lower quality
-        .sourceSize({ width: 300, height: 300 })  // ✅ Critical: decode at smaller size
-        .renderMode(ImageRenderMode.Original)
+  // ==================== Backend Logic ====================
 
-      Text(plant.Name)
-        .fontSize(13)
-        .maxLines(1)
-        .textOverflow({ overflow: TextOverflow.Ellipsis })
-        .textAlign(TextAlign.Center)
-        .width('100%')
+  /**
+   * Load all plants from storage
+   */
+  async loadPlants() {
+    try {
+      const context = getContext(this) as common.UIAbilityContext
+      await PlantStorage.init(context)
+      this.plants = await PlantStorage.getAllPlants()
+      this.totalPages = Math.ceil(this.plants.length / this.itemsPerPage)
+      console.info(`📚 Loaded ${this.plants.length} plants, ${this.totalPages} pages`)
+    } catch (err) {
+      console.error('Failed to load plants:', JSON.stringify(err))
     }
-    .width('100%')
-    .onClick(() => {
-      router.pushUrl({
-        url: 'pages/WikiPage',
-        params: { infoCode: plant.InfoCode }
-      }).catch((err: Error) => {
-        console.error('Navigation error:', err.message);
-      });
+  }
+
+  /**
+   * Navigate back
+   */
+  handleBack() {
+    router.back()
+  }
+
+  /**
+   * Navigate to plant wiki page
+   */
+  handlePlantClick(infoCode: string) {
+    router.pushUrl({
+      url: 'pages/WikiPage',
+      params: { infoCode: infoCode }
+    }).catch((err: Error) => {
+      console.error('Navigation error:', err.message)
     })
+  }
+
+  /**
+   * Go to previous page
+   */
+  handlePrevPage() {
+    if (this.currentPage > 0) {
+      this.currentPage--
+    }
+  }
+
+  /**
+   * Go to next page
+   */
+  handleNextPage() {
+    if (this.currentPage < this.totalPages - 1) {
+      this.currentPage++
+    }
   }
 }

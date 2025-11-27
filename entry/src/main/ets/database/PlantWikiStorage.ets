@@ -44,17 +44,21 @@ export class PlantWikiStorage {
     return JSON.parse(data as string) as Record<string, PlantWikiInfo>;
   }
 
-  // async deleteWiki(infoCode: string): Promise<boolean> {
-  //   if (!PlantWikiStorage.pref) return false;
-  //   try {
-  //     const records = await PlantWikiStorage.pref.get(KEY_WIKI, {});
-  //     // 使用解构语法创建新对象
-  //     const { [infoCode]: _, ...newRecords } = records;
-  //     await PlantWikiStorage.pref.put(KEY_WIKI, newRecords);
-  //     return true;
-  //   } catch (err) {
-  //     console.error(`Delete wiki failed: ${err}`);
-  //     return false;
-  //   }
-  // }
+  static async deleteWiki(infoCode: string): Promise<boolean> {
+    if (!PlantWikiStorage.pref) throw new Error('Storage not initialized');
+
+    const allWiki = await PlantWikiStorage.getAllWiki();
+    const filtered: Record<string, PlantWikiInfo> = {};
+
+    Object.keys(allWiki).forEach((key: string) => {
+      if (key !== infoCode) {
+        filtered[key] = allWiki[key];
+      }
+    });
+
+    await PlantWikiStorage.pref.put(KEY_WIKI, JSON.stringify(filtered));
+    await PlantWikiStorage.pref.flush();
+    console.info(`🗑️ Wiki deleted: ${infoCode}`);
+    return true;
+  }
 }
